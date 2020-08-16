@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Web;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Boilerplate\BaseValidation;
 
-class AchievementsRequest extends FormRequest
+
+class AchievementsRequest extends BaseValidation
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class AchievementsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Web;
 
+use App\Http\Requests\Boilerplate\BaseValidation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class ProjectsRequest extends FormRequest
+class ProjectsRequest extends BaseValidation
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +15,7 @@ class ProjectsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +26,9 @@ class ProjectsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:255',
+            'repo_link' => 'required|max:255',
+            'status' => 'required',Rule::in([CURRENT_PROJECTS,PREVIOUS_PROJECTS])
         ];
     }
 }

@@ -2,29 +2,43 @@
     <div class="sidebar-left open rtl-ps-none" data-perfect-scrollbar data-suppress-scroll-x="true">
         <ul class="navigation-left">
             <li class="nav-item ">
-                <a class="nav-item-hold" href="#">
+                <a class="nav-item-hold" href="{{route('web.user.dashboard')}}">
                     <i class="nav-icon i-Bar-Chart"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item" data-item="uikits">
-                <a class="nav-item-hold" href="#">
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{{route('web.user.projects.index')}}">
                     <i class="nav-icon i-Library"></i>
-                    <span class="nav-text">UI kits</span>
+                    <span class="nav-text">Projects</span>
                 </a>
                 <div class="triangle"></div>
             </li>
-            <li class="nav-item" data-item="userList">
-                <a class="nav-item-hold" href="#">
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{{route('web.user.education.index')}}">
                     <i class="nav-icon i-Library"></i>
-                    <span class="nav-text">USER LIST</span>
+                    <span class="nav-text">Education Background</span>
                 </a>
                 <div class="triangle"></div>
             </li>
-            <li class="nav-item" data-item="userList">
-                <a class="nav-item-hold" href="#">
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{{route('web.user.workExperience.index')}}">
                     <i class="nav-icon i-Library"></i>
-                    <span class="nav-text">USER LIST</span>
+                    <span class="nav-text">WorkExperiences</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{{route('web.user.achievement.index')}}">
+                    <i class="nav-icon i-Library"></i>
+                    <span class="nav-text">Achievements</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{{route('web.user.resume.index')}}">
+                    <i class="nav-icon i-Library"></i>
+                    <span class="nav-text">Resume</span>
                 </a>
                 <div class="triangle"></div>
             </li>

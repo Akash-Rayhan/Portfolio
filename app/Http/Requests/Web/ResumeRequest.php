@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Web;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Boilerplate\BaseValidation;
 
-class ResumeRequest extends FormRequest
+class ResumeRequest extends BaseValidation
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ResumeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class ResumeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:255',
+            'file.*' => 'required|file|max:10000|mimes:doc,docx,pdf'
         ];
     }
 }

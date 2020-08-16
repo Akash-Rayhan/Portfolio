@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: debu
- * Date: 7/5/19
- * Time: 1:37 PM
- */
-
 
 
 const USER_PENDING_STATUS = 0;
@@ -24,3 +17,6 @@ const EXPIRE_TIME_OF_FORGET_PASSWORD_CODE = 10;
 
 const DEFAULT_TIME = 10;
 const DEFAULT_SUBSCRIPTION_TIME = 12;
+
+const CURRENT_PROJECTS = 1;
+const PREVIOUS_PROJECTS = 2;

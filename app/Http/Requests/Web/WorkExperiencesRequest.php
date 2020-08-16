@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Web;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Boilerplate\BaseValidation;
 
-class WorkExperiencesRequest extends FormRequest
+class WorkExperiencesRequest extends BaseValidation
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class WorkExperiencesRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class WorkExperiencesRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'company_name' => 'required|max:255',
+            'job_position' =>  'required|max:255'
         ];
     }
 }

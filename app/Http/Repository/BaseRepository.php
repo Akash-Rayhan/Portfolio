@@ -2,6 +2,8 @@
 
 namespace App\Http\Repository;
 
+use Illuminate\Support\Facades\Auth;
+
 abstract class BaseRepository {
 
     /**
@@ -164,6 +166,14 @@ abstract class BaseRepository {
      */
     public function updateOrCreate(array $where, array $data) {
         return $this->model->updateOrCreate($where, $data);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthData(){
+
+        return $this->model->where('user_id', Auth::id())->get();
     }
 
 }

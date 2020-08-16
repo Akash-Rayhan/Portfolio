@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Web;
 
 use App\Http\Requests\Boilerplate\BaseValidation;
-use Illuminate\Foundation\Http\FormRequest;
 
 class EducationRequest extends BaseValidation
 {
@@ -25,7 +24,9 @@ class EducationRequest extends BaseValidation
     public function rules()
     {
         return [
-            //
+            'degree' => 'required|max:255',
+            'session' => 'required|numeric',
+            'institution' => 'required|max:255'
         ];
     }
 }
