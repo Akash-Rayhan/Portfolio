@@ -114,10 +114,10 @@
             }
             $("#resume-div").on('click','#resume-download',function () {
                 let file_name = $(this).data('file_name');
-
+                downloadResume(file_name);
             })
             function downloadResume(fileName) {
-
+                $('<form action="{{route('web.user.resume.download')}}" method="get">@csrf<input name="file_name" type="hidden" value="'+fileName+'"></form>').appendTo("#resume-div").submit().remove();
             }
             function printErrorMsg (msg) {
                 $("#error-message").find("ul").html('');
@@ -132,4 +132,5 @@
             }
         })
     </script>
+
 @endsection

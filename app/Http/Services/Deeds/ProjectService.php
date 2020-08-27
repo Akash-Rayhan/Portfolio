@@ -1,28 +1,28 @@
 <?php
 
 
-namespace App\Http\Services;
-
-
-use App\Http\Repository\EducationRepository;
+namespace App\Http\Services\Deeds;
 use App\Http\Services\Boilerplate\BaseService;
+
+use App\Http\Repository\ProjectRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
-class EducationService extends BaseService
+class ProjectService extends BaseService
 {
     /**
-     * @var EducationRepository
+     * ProjectService constructor.
+     * @param ProjectRepository $projectRepository
      */
-    public function __construct(EducationRepository $educationRepository)
+    public function __construct(ProjectRepository $projectRepository)
     {
-        $this->repository = $educationRepository;
+        $this->repository = $projectRepository;
     }
 
     /**
      * @return array
      */
-    public function getEducationData() :array {
+    public function getProjectData() :array {
         try {
             $data = $this->repository->getAuthData();
 
@@ -37,14 +37,9 @@ class EducationService extends BaseService
      * @param $request
      * @return array
      */
-    public function storeEducationFormData($request) :array {
+    public function storeProjectData($request) :array {
         try {
-            $input = [
-                'user_id' => Auth::id(),
-                'degree' => $request->degree,
-                'session' => $request->session,
-                'institution' => $request->institution
-            ];
+            $input =  array_merge(['user_id' => Auth::id()], $this->prepareToInjectData($request));
             $this->repository->create($input);
 
             return $this->response()->success("Saved Successfully");
@@ -59,14 +54,9 @@ class EducationService extends BaseService
      * @param $request
      * @return array
      */
-    public function updateEducationData($request) :array {
+    public function updateProjectData($request) :array {
         try {
-            $input = [
-                'degree' => $request->degree,
-                'session' => $request->session,
-                'institution' => $request->institution
-            ];
-            $this->repository->update($request->id, $input);
+            $this->repository->update($request->id, $this->prepareToInjectData($request));
 
             return $this->response()->success("Updated Successfully");
         }catch (Exception $e){
@@ -79,7 +69,7 @@ class EducationService extends BaseService
      * @param $request
      * @return array
      */
-    public function destroyEducationData($request) :array {
+    public function destroyProjectData($request) :array {
         try {
             $this->repository->destroy($request->id);
 
@@ -88,5 +78,17 @@ class EducationService extends BaseService
 
             return $this->response()->error();
         }
+    }
+
+    /**
+     * @param $request
+     * @return array
+     */
+    public function prepareToInjectData($request) :array{
+        return [
+            'title' => $request->title,
+            'status' => $request->status,
+            'repo_link' => $request->repo_link
+        ];
     }
 }

@@ -1,27 +1,28 @@
 <?php
 
 
-namespace App\Http\Services;
-use App\Http\Repository\AchievementRepository;
+namespace App\Http\Services\Background;
+
+
+use App\Http\Repository\EducationRepository;
 use App\Http\Services\Boilerplate\BaseService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
-class AchievementService extends BaseService
+class EducationService extends BaseService
 {
     /**
-     * AchievementService constructor.
-     * @param AchievementRepository $achievementRepository
+     * @var EducationRepository
      */
-    public function __construct(AchievementRepository $achievementRepository)
+    public function __construct(EducationRepository $educationRepository)
     {
-        $this->repository = $achievementRepository;
+        $this->repository = $educationRepository;
     }
 
     /**
      * @return array
      */
-    public function getAchievementData() :array {
+    public function getEducationData() :array {
         try {
             $data = $this->repository->getAuthData();
 
@@ -36,13 +37,9 @@ class AchievementService extends BaseService
      * @param $request
      * @return array
      */
-    public function storeAchievementData($request) :array {
+    public function storeEducationFormData($request) :array {
         try {
-            $input = [
-                'user_id' => Auth::id(),
-                'title' => $request->title,
-                'description' => $request->description
-            ];
+            $input = array_merge(['user_id' => Auth::id()], $this->prepareToInjectData($request));
             $this->repository->create($input);
 
             return $this->response()->success("Saved Successfully");
@@ -50,19 +47,16 @@ class AchievementService extends BaseService
 
             return $this->response()->error();
         }
+
     }
 
     /**
      * @param $request
      * @return array
      */
-    public function updateAchievementData($request) :array {
+    public function updateEducationData($request) :array {
         try {
-            $input = [
-                'title' => $request->title,
-                'description' => $request->description
-            ];
-            $this->repository->update($request->id, $input);
+            $this->repository->update($request->id, $this->prepareToInjectData($request));
 
             return $this->response()->success("Updated Successfully");
         }catch (Exception $e){
@@ -75,7 +69,7 @@ class AchievementService extends BaseService
      * @param $request
      * @return array
      */
-    public function destroyAchievementData($request){
+    public function destroyEducationData($request) :array {
         try {
             $this->repository->destroy($request->id);
 
@@ -84,5 +78,17 @@ class AchievementService extends BaseService
 
             return $this->response()->error();
         }
+    }
+
+    /**
+     * @param $request
+     * @return array
+     */
+    public function prepareToInjectData($request) :array{
+        return [
+            'degree' => $request->degree,
+            'session' => $request->session,
+            'institution' => $request->institution
+        ];
     }
 }

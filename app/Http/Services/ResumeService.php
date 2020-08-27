@@ -64,15 +64,11 @@ class ResumeService extends BaseService
             $this->repository->destroy($request->id);
             if ($deleteResponse){
                 DB::commit();
-
-                return $this->response()->success("Deleted");
             }
-            else{
-                DB::rollBack();
 
-                return $this->response()->error();
-            }
+            return $this->response()->success("Deleted");
         }catch (Exception $e){
+            DB::rollBack();
 
             return $this->response()->error();
         }

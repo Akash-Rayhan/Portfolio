@@ -1,28 +1,27 @@
 <?php
 
 
-namespace App\Http\Services;
+namespace App\Http\Services\Background;
+use App\Http\Repository\WorkExperienceRepository;
 use App\Http\Services\Boilerplate\BaseService;
-
-use App\Http\Repository\ProjectRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
-class ProjectService extends BaseService
+class WorkExperienceService extends BaseService
 {
     /**
-     * ProjectService constructor.
-     * @param ProjectRepository $projectRepository
+     * WorkExperienceService constructor.
+     * @param WorkExperienceRepository $workExperienceRepository
      */
-    public function __construct(ProjectRepository $projectRepository)
+    public function __construct(WorkExperienceRepository $workExperienceRepository)
     {
-        $this->repository = $projectRepository;
+        $this->repository = $workExperienceRepository;
     }
 
     /**
      * @return array
      */
-    public function getProjectData() :array {
+    public function getWorkExperienceData() :array {
         try {
             $data = $this->repository->getAuthData();
 
@@ -37,14 +36,9 @@ class ProjectService extends BaseService
      * @param $request
      * @return array
      */
-    public function storeProjectData($request) :array {
+    public function storeWorkExperienceData($request) :array {
         try {
-            $input = [
-                'user_id' => Auth::id(),
-                'title' => $request->title,
-                'status' => $request->status,
-                'repo_link' => $request->repo_link
-            ];
+            $input = array_merge(['user_id' => Auth::id()], $this->prepareToInjectData($request));
             $this->repository->create($input);
 
             return $this->response()->success("Saved Successfully");
@@ -52,21 +46,15 @@ class ProjectService extends BaseService
 
             return $this->response()->error();
         }
-
     }
 
     /**
      * @param $request
      * @return array
      */
-    public function updateProjectData($request) :array {
+    public function updateWorkExperienceData($request) :array {
         try {
-            $input = [
-                'title' => $request->title,
-                'status' => $request->status,
-                'repo_link' => $request->repo_link
-            ];
-            $this->repository->update($request->id, $input);
+            $this->repository->update($request->id, $this->prepareToInjectData($request));
 
             return $this->response()->success("Updated Successfully");
         }catch (Exception $e){
@@ -79,7 +67,7 @@ class ProjectService extends BaseService
      * @param $request
      * @return array
      */
-    public function destroyProjectData($request) :array {
+    public function destroyWorkExperienceData($request) :array {
         try {
             $this->repository->destroy($request->id);
 
@@ -88,5 +76,16 @@ class ProjectService extends BaseService
 
             return $this->response()->error();
         }
+    }
+
+    /**
+     * @param $request
+     * @return array
+     */
+    public function prepareToInjectData($request) :array{
+        return [
+            'company_name' => $request->company_name,
+            'job_position' => $request->job_position
+        ];
     }
 }

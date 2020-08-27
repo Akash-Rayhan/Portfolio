@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\AchievementsRequest;
-use App\Http\Services\AchievementService;
+use App\Http\Services\Deeds\AchievementService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\JsonResponse;
